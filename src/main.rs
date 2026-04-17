@@ -19,8 +19,14 @@ impl EventHandler for Handler {
             println!("Received command interaction: {command:#?}");
 
             let content = match command.data.name.as_str() {
-                "text_to_cat" => Some(commands::text_to_cat::run(&command.data.options())),
-                "cat_to_text" => Some(commands::cat_to_text::run(&command.data.options())),
+                "text_to_cat" => {
+                    commands::text_to_cat::run(&ctx, &command).await.unwrap();
+                    None
+                },
+                "cat_to_text" => {
+                    commands::cat_to_text::run(&ctx, &command).await.unwrap();
+                    None
+                }
                 _ => Some("not implemented :(".to_string()),
             };
 
